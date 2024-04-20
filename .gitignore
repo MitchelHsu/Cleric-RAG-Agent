@@ -2,3 +2,6 @@ __pycache__/
 
 # PyCharm
 .idea/
+
+# test logs
+test_logs/
