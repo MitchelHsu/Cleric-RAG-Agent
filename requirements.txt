@@ -1,0 +1,6 @@
+Flask
+openai
+pydantic
+langchain
+langchain-openai
+pydantic
