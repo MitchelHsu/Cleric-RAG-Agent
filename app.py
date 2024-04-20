@@ -35,7 +35,7 @@ def get_response():
             facts=[],
             status='No data found.'
         )
-        return jsonify(response.dict())
+        return jsonify(response.dict()), 200
 
     if processing:
         response = GetQuestionAndFactsResponse(
