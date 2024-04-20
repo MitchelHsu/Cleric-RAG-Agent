@@ -30,7 +30,12 @@ def get_response():
     global submitted_data, processing, agent
 
     if not submitted_data:
-        return 'No data found.'
+        response = GetQuestionAndFactsResponse(
+            question=None,
+            facts=[],
+            status='No data found.'
+        )
+        return response.dict()
 
     if processing:
         response = GetQuestionAndFactsResponse(
