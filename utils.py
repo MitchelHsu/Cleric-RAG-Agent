@@ -9,7 +9,15 @@ def load_logs(log_paths: List) -> str:
 
     return logs
 
-# def get_response(bullets: str) -> str:
-#     response = ""
-#     for bullet in bullets.split('\n'):
-#         response += bullet + '\n'
+
+def read_documents(documents: List[str]) -> List[str]:
+    logs = []
+    for url in documents:
+        response = requests.get(url)
+        logs.append(response.text)
+
+    return logs
+
+
+def preprocess_logs(logs: List[str]):
+    return '\n'.join(logs)
