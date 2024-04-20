@@ -1,4 +1,3 @@
-import asyncio
 from langchain_openai import ChatOpenAI
 from config import examples, example_template, template, template_v2
 from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
