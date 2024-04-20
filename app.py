@@ -35,7 +35,7 @@ def get_response():
             facts=[],
             status='No data found.'
         )
-        return response.dict()
+        return jsonify(response.dict())
 
     if processing:
         response = GetQuestionAndFactsResponse(
@@ -43,7 +43,7 @@ def get_response():
             facts=[],
             status='processing'
         )
-        return jsonify(response.dict())
+        return jsonify(response.dict()), 200
 
     response = GetQuestionAndFactsResponse(
         question=submitted_data.question,
@@ -71,7 +71,7 @@ def submit_question():
 
     processing = False
     response = SubmitQuestionAndDocumentsResponse()
-    return response.dict(), 200
+    return jsonify(response.dict()), 200
 
 
 if __name__ == '__main__':
