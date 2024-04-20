@@ -17,6 +17,9 @@ class GetQuestionAndFactsResponse(BaseModel):
     facts: Optional[List[str]]
     status: str
 
+class SubmitQuestionAndDocumentsResponse(BaseModel):
+    pass
+
 class SubmitQuestionAndDocumentRequest(BaseModel):
     question: str
     documents: List[str]
@@ -62,8 +65,9 @@ def submit_question():
     )
 
     processing = False
-    return '', 200
+    response = SubmitQuestionAndDocumentsResponse()
+    return response.dict(), 200
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
