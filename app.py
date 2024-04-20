@@ -25,7 +25,6 @@ class SubmitQuestionAndDocumentRequest(BaseModel):
 @app.route('/get_question_and_facts', methods=['GET'])
 def get_response():
     global submitted_data, processing, agent
-    print('RECEIVED GET')
 
     if not submitted_data:
         return 'No data found.'
@@ -50,7 +49,6 @@ def get_response():
 @app.route('/submit_question_and_documents', methods=['POST'])
 def submit_question():
     global submitted_data, processing, agent
-    print('HEREHERHEHERHERHERER')
     processing = True
     request_content = request.get_json()
     submitted_data = SubmitQuestionAndDocumentRequest(**request_content)
