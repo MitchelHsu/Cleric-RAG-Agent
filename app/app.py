@@ -1,8 +1,12 @@
 from agent import Agent
-from config import MODEL
 from flask import Flask, jsonify, request
-from utils import read_documents, validate_request_logs
+from config import MODEL, CHUNK_SIZE, CHUNK_OVERLAP, RETRIEVE_TOP_K
+from utils import read_documents, validate_request_logs, preprocess_logs
 from models import GetQuestionAndFactsResponse, SubmitQuestionAndDocumentsResponse, SubmitQuestionAndDocumentRequest
+
+from llama_index.core import VectorStoreIndex, Document
+from llama_index.core.node_parser import SentenceSplitter
+from llama_index.core.retrievers import VectorIndexRetriever
 
 app = Flask(__name__)
 agent = Agent(model=MODEL)
@@ -76,10 +80,22 @@ def submit_question():
         response = SubmitQuestionAndDocumentsResponse(status=f'No data found in the URLs')
         return jsonify(response.dict()), 200
 
+    documents = [Document(text=preprocess_logs(logs))]
+    parser = SentenceSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+    nodes = parser.get_nodes_from_documents(documents)
+
+    # Set node time stamp
+    for i, node in enumerate(nodes):
+        node.id_ = i
+
+    index = VectorStoreIndex(nodes)
+    retriever = VectorIndexRetriever(index, similarity_top_k=RETRIEVE_TOP_K)
+
     # Call agent to summarize logs
     agent.summarize(
         question=submitted_data.question,
-        logs=logs
+        logs=logs,
+        retriever=retriever
     )
 
     processing = False

@@ -26,16 +26,29 @@ class Agent:
         self.logs = None
         self.response = None
 
-    def summarize(self, question, logs):
+    def summarize(self, question, logs, retriever=None):
         self.question = question
-        self.logs = preprocess_logs(logs)
+        if retriever:
+            retrieved_logs = self.retrieve_logs(retriever)
+            prompt_formatted = self.prompt.format(
+                question=question,
+                logs=retrieved_logs
+            )
+        else:
+            self.logs = preprocess_logs(logs)
 
-        prompt_formatted = self.prompt.format(
-            question=question,
-            logs=self.logs
-        )
+            prompt_formatted = self.prompt.format(
+                question=question,
+                logs=self.logs
+            )
 
         self.response = self.llm.predict(prompt_formatted)
+
+    def retrieve_logs(self, retriever):
+        retriever_nodes = retriever.retrieve(self.question)
+        retriever_nodes = sorted(retriever_nodes, key=lambda n: n.node_id, reverse=True)
+
+        return '\n'.join([node.text for node in retriever_nodes])
 
     def get_question(self):
         return self.question
