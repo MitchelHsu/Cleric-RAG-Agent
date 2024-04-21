@@ -1,11 +1,11 @@
+import os
 import time
 import requests
 import gradio as gr
 from utils import get_url_list
 from models import SubmitQuestionAndDocumentRequest, GetQuestionAndFactsResponse, SubmitQuestionAndDocumentsResponse
 
-base_url = 'https://cleric-agent-api-untxx3isja-uc.a.run.app'
-# base_url = 'http://localhost:8000'
+base_url = os.environ['CLERIC_API_ENDPOINT']
 
 
 def fetch_facts(question, call_log_urls):
