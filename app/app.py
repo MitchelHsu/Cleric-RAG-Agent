@@ -1,8 +1,7 @@
-import time
 from agent import Agent
 from config import MODEL
 from flask import Flask, jsonify, request
-from utils import read_documents, preprocess_logs
+from utils import read_documents, preprocess_logs, validate_request_logs
 from models import GetQuestionAndFactsResponse, SubmitQuestionAndDocumentsResponse, SubmitQuestionAndDocumentRequest
 
 app = Flask(__name__)
@@ -15,13 +14,11 @@ submitted_data = None
 def get_response():
     global submitted_data, processing, agent
 
-    print(submitted_data)
-
     if not submitted_data:
         response = GetQuestionAndFactsResponse(
             question='',
             facts=[],
-            status='No data found.'
+            status='No data found, please submit data'
         )
         return jsonify(response.dict()), 200
 
@@ -47,9 +44,25 @@ def submit_question():
     global submitted_data, processing, agent
     processing = True
     request_content = request.get_json()
-    submitted_data = SubmitQuestionAndDocumentRequest(**request_content)
 
-    logs = read_documents(submitted_data.urls)
+    try:
+        submitted_data = SubmitQuestionAndDocumentRequest(**request_content)
+    except ValueError as e:
+        response = SubmitQuestionAndDocumentsResponse(status=f'Request payload does not match expected schema: {str(e)}')
+        return jsonify(response.dict())
+
+    try:
+        validate_request_logs(submitted_data.documents)
+    except ValueError as e:
+        response = SubmitQuestionAndDocumentsResponse(status=f'URL validation failed: {e}')
+        return jsonify(response.dict())
+
+    try:
+        logs = read_documents(submitted_data.documents)
+    except Exception as e:
+        response = SubmitQuestionAndDocumentsResponse(status=f'URL read failed: {e}')
+        return jsonify(response.dict())
+
     processed_logs = preprocess_logs(logs)
 
     agent.process_request(
@@ -58,7 +71,7 @@ def submit_question():
     )
 
     processing = False
-    response = SubmitQuestionAndDocumentsResponse()
+    response = SubmitQuestionAndDocumentsResponse(status='success')
     return jsonify(response.dict()), 200
 
 
