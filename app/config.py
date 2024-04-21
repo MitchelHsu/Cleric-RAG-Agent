@@ -37,4 +37,11 @@ examples = [
      'answer': "- The team has decided to focus on a desktop-first design\n- The team has decided to provide both dark and light theme options for the user interface."},
 ]
 
-MODEL = 'gpt-4'
+# OPENAI MODEL
+MODEL           = 'gpt-4'
+
+# LLamaIndex Configs
+CHUNK_SIZE      = 80  # For parser
+CHUNK_OVERLAP   = 20
+
+RETRIEVE_TOP_K  = 10
