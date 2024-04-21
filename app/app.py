@@ -1,7 +1,7 @@
 from agent import Agent
 from config import MODEL
 from flask import Flask, jsonify, request
-from utils import read_documents, preprocess_logs, validate_request_logs
+from utils import read_documents, validate_request_logs
 from models import GetQuestionAndFactsResponse, SubmitQuestionAndDocumentsResponse, SubmitQuestionAndDocumentRequest
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ submitted_data = None
 def get_response():
     global submitted_data, processing, agent
 
+    # If no data found
     if not submitted_data:
         response = GetQuestionAndFactsResponse(
             question='',
@@ -22,6 +23,7 @@ def get_response():
         )
         return jsonify(response.dict()), 200
 
+    # If still processing request
     if processing:
         response = GetQuestionAndFactsResponse(
             question=submitted_data.question,
@@ -30,6 +32,7 @@ def get_response():
         )
         return jsonify(response.dict()), 200
 
+    # Request processed, create response with Agent summarization
     response = GetQuestionAndFactsResponse(
         question=submitted_data.question,
         facts=agent.get_response_list(),
@@ -45,29 +48,38 @@ def submit_question():
     processing = True
     request_content = request.get_json()
 
+    # Submit payload read and validation
     try:
         submitted_data = SubmitQuestionAndDocumentRequest(**request_content)
     except ValueError as e:
         response = SubmitQuestionAndDocumentsResponse(status=f'Request payload does not match expected schema: {str(e)}')
-        return jsonify(response.dict())
+        return jsonify(response.dict()), 200
 
+    # Validate request URLS formats
     try:
         validate_request_logs(submitted_data.documents)
     except ValueError as e:
+        # Respond with URL validation failed error
         response = SubmitQuestionAndDocumentsResponse(status=f'URL validation failed: {e}')
-        return jsonify(response.dict())
+        return jsonify(response.dict()), 200
 
+    # Try loading documents
     try:
         logs = read_documents(submitted_data.documents)
     except Exception as e:
+        # Respond with URL read fail if URL read error
         response = SubmitQuestionAndDocumentsResponse(status=f'URL read failed: {e}')
-        return jsonify(response.dict())
+        return jsonify(response.dict()), 200
 
-    processed_logs = preprocess_logs(logs)
+    # If no data found
+    if len(logs) == 0:
+        response = SubmitQuestionAndDocumentsResponse(status=f'No data found in the URLs')
+        return jsonify(response.dict()), 200
 
-    agent.process_request(
+    # Call agent to summarize logs
+    agent.summarize(
         question=submitted_data.question,
-        logs=processed_logs
+        logs=logs
     )
 
     processing = False
