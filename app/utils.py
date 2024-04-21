@@ -26,7 +26,7 @@ def read_documents(documents: List[str]) -> List[str]:
     return logs
 
 
-def preprocess_logs(logs: List[str]):
+def preprocess_logs(logs: List[str]) -> str:
     return '\n'.join(logs)
 
 
