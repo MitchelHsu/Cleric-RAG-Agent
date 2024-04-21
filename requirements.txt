@@ -6,3 +6,4 @@ langchain-openai
 pydantic
 gunicorn
 validators
+llama-index
