@@ -9,9 +9,9 @@ class GetQuestionAndFactsResponse(BaseModel):
 
 
 class SubmitQuestionAndDocumentsResponse(BaseModel):
-    pass
+    status: str
 
 
 class SubmitQuestionAndDocumentRequest(BaseModel):
     question: str
-    urls: List[str]
+    documents: List[str]
