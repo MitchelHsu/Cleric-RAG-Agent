@@ -1,3 +1,4 @@
+from utils import preprocess_logs
 from langchain_openai import ChatOpenAI
 from config import examples, example_template, template_v2
 from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
@@ -25,13 +26,13 @@ class Agent:
         self.logs = None
         self.response = None
 
-    def process_request(self, question, logs):
+    def summarize(self, question, logs):
         self.question = question
-        self.logs = logs
+        self.logs = preprocess_logs(logs)
 
         prompt_formatted = self.prompt.format(
             question=question,
-            logs=logs
+            logs=self.logs
         )
 
         self.response = self.llm.predict(prompt_formatted)
