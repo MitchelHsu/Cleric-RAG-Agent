@@ -1,5 +1,5 @@
 
-# Call Logs Retrival Augmented Generation Agent
+# Cleric Call Logs Retrival Augmented Generation Agent
 
 This is a call logs RAG agent PoC.
 You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui).
