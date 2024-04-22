@@ -8,6 +8,8 @@ You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui)
 
 - [Application URL](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui)
 - [API Endpoint](https://cleric-agent-api-untxx3isja-uc.a.run.app)
+    - `/submit_question_and_documents`
+    - `/get_question_and_facts`
 
 
 ## Implemented Architecture
@@ -41,8 +43,8 @@ Remember to install the dependencies by running `pip install -r requirements.txt
 ## Implementation Details
 
 - `app/app.py`: Implements the API using Python Flask, there are two endpoints provided:
-  - `submit_question_and_documents`: Handles user submissions of documents and question. Respond `"sucess"` if submission was successful. Error handling are covered when request schema mismatch, URLs format error, document load error, and no logs found.
-  - `get_question_and_facts`: Handles user query of question and facts. Respond respective status of the query (`"done"`, `"processing"`, `"No data found"`).
+  - `/submit_question_and_documents`: Handles user submissions of documents and question. Respond `"sucess"` if submission was successful. Error handling are covered when request schema mismatch, URLs format error, document load error, and no logs found.
+  - `/get_question_and_facts`: Handles user query of question and facts. Respond respective status of the query (`"done"`, `"processing"`, `"No data found"`).
 
     The endpoint also creates a `VectorStoreIndex` to split data into chunks, then passes a retriever for the Agent to retrieve relevant information.
 - `app/agent.py`: Implements the agent logic, including prompt engineering. The agent is responsible for constructing a response given the call logs. Here I use `FewShotPromptTemplate` and `PromptTemplate` to format the prompt pass to `gpt`.
