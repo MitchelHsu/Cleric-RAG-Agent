@@ -10,7 +10,7 @@ You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui)
 ## Implemented Architecture
 
 The figure below shows the architecture of my implementation.
-The core component is packaged as a container and hosted within GCP (Google Cloud Platform), and the UI is hosted with [HuggingFace Spaces](https://huggingface.co/spaces).
+The core component is packaged as a container and hosted within GCP (Google Cloud Platform), the API endpoint is [here](https://cleric-agent-api-untxx3isja-uc.a.run.app). The UI is hosted with [HuggingFace Spaces](https://huggingface.co/spaces).
 
 ![System Architecture](static/sys_arch.png)
 
