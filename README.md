@@ -2,8 +2,8 @@
 # Cleric Call Logs Retrival Augmented Generation Agent
 
 This is a call logs RAG agent implemented with [LangChain](https://www.langchain.com/) and [LLamaIndex](https://www.llamaindex.ai/).
-The Agent uses _FewShotPromptTemplate_ to create a list of facts extracted from the given documents.
-LLamaIndex plays the role to store data chunks, and stores them to a _VectorStore_ for the Agent to query.
+The application uses _FewShotPromptTemplate_ and _PromptTemplate_ to prompt LLM and create a list of facts extracted from the given documents.
+LLamaIndex plays the role to store data chunks to a _VectorStore_ for the Agent to retrieve relevant information according to the question.
 You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui).
 
 - [Application URL](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui)
