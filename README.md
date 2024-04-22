@@ -42,7 +42,7 @@ Remember to install the dependencies by running `pip install -r requirements.txt
 
 ## Implementation Details
 
-- `app/app.py`: Implements the API using Python Flask, there are two endpoints provided:
+- `app/app.py`: Implements the API using Python Flask, there are two endpoints provided, details of the [schemas](app/models.py):
   - `/submit_question_and_documents`: Handles user submissions of documents and question. Respond `"sucess"` if submission was successful. Error handling are covered when request schema mismatch, URLs format error, document load error, and no logs found.
   - `/get_question_and_facts`: Handles user query of question and facts. Respond respective status of the query (`"done"`, `"processing"`, `"No data found"`).
 
