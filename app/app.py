@@ -89,7 +89,7 @@ def submit_question():
         node.id_ = i
 
     index = VectorStoreIndex(nodes)
-    retriever = VectorIndexRetriever(index, similarity_top_k=RETRIEVE_TOP_K)
+    retriever = VectorIndexRetriever(index, similarity_top_k=len(nodes))
 
     # Call agent to summarize logs
     agent.summarize(

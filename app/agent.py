@@ -45,8 +45,8 @@ class Agent:
         self.response = self.llm.predict(prompt_formatted)
 
     def retrieve_logs(self, retriever):
-        retriever_nodes = retriever.retrieve(self.question)
-        retriever_nodes = sorted(retriever_nodes, key=lambda n: n.node_id, reverse=True)
+        retrieved_nodes = [node for node in retriever.retrieve(self.question) if node.score > 0.5]
+        retriever_nodes = sorted(retrieved_nodes, key=lambda n: n.node_id)
 
         return '\n'.join([node.text for node in retriever_nodes])
 
