@@ -1,7 +1,9 @@
 
 # Cleric Call Logs Retrival Augmented Generation Agent
 
-This is a call logs RAG agent PoC.
+This is a call logs RAG agent implemented with [LangChain](https://www.langchain.com/) and [LLamaIndex](https://www.llamaindex.ai/).
+The Agent uses _FewShotPromptTemplate_ to create a list of facts extracted from the given documents.
+LLamaIndex plays the role to store data chunks, and stores them to a _VectorStore_ for the Agent to query.
 You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui).
 
 
@@ -45,3 +47,11 @@ Remember to install the dependencies by running `pip install -r requirements.txt
 - `app/utils.py`: Implements helper functions, such as URL validation, document retrieving, etc.
 - `app/configs.py`: Stores configurations such as prompt templates and model selection.
 - `app/models.py`: Defines the `pydantic` models for API request and response.
+
+
+### Design Thinking Process
+
+I initially developed a basic agent using a _PromptTemplate_, but I noticed random responses and lengthy statements, so I refined the prompt template and implemented a _FewShotTemplate_ (3-shot) for the better structure (see [here](https://github.com/MitchelHsu/Cleric-RAG-Agent/blob/main/app/config.py#L7)).
+In anticipating challenge where the call logs might be extensive, therefore affecting the agent's accuracy and increase computational demands.
+I leveraged LLamaIndex and _VectorStoreIndex_ to manage data chunks and facilitate the retrieval of essential information for the agent's extraction process.
+And to preserve the order of the call logs, I sorted the retrieve data _nodes_ with their original order to ensure chronological decision-making.
