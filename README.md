@@ -55,3 +55,9 @@ I initially developed a basic agent using a _PromptTemplate_, but I noticed rand
 In anticipating challenge where the call logs might be extensive, therefore affecting the agent's accuracy and increase computational demands.
 I leveraged LLamaIndex and _VectorStoreIndex_ to manage data chunks and facilitate the retrieval of essential information for the agent's extraction process.
 And to preserve the order of the call logs, I sorted the retrieve data _nodes_ with their original order to ensure chronological decision-making.
+
+Here is the example from the [validator](https://crc-assignment-validator-n65rz53nomn.streamlit.app/):
+
+<p align="center">
+  <img src="static/validation.png" alt="example" width="500"/>
+</p>
