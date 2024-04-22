@@ -7,7 +7,7 @@ LLamaIndex plays the role to store data chunks, and stores them to a _VectorStor
 You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui).
 
 
-### Implemented Architecture
+## Implemented Architecture
 
 The figure below shows the architecture of my implementation.
 The core component is packaged as a container and hosted within GCP (Google Cloud Platform), and the UI is hosted with [HuggingFace Spaces](https://huggingface.co/spaces).
@@ -15,7 +15,7 @@ The core component is packaged as a container and hosted within GCP (Google Clou
 ![System Architecture](static/sys_arch.png)
 
 
-### Run with Docker
+## Run with Docker
 
 Pull the image from [this](https://hub.docker.com/repository/docker/mitchhsu/cleric-agent/general) container repo, the 
 latest version is `v0.3`, you can use `latest` as well:
@@ -35,7 +35,7 @@ python app/ui.py
 Remember to install the dependencies by running `pip install -r requirements.txt`.
 
 
-### Implementation Details
+## Implementation Details
 
 - `app/app.py`: Implements the API using Python Flask, there are two endpoints provided:
   - `submit_question_and_documents`: Handles user submissions of documents and question. Respond `"sucess"` if submission was successful. Error handling are covered when request schema mismatch, URLs format error, document load error, and no logs found.
@@ -49,7 +49,7 @@ Remember to install the dependencies by running `pip install -r requirements.txt
 - `app/models.py`: Defines the `pydantic` models for API request and response.
 
 
-### Design Thinking Process
+## Design Thinking Process
 
 I initially developed a basic agent using a _PromptTemplate_, but I noticed random responses and lengthy statements, so I refined the prompt template and implemented a _FewShotTemplate_ (3-shot) for the better structure (see [here](https://github.com/MitchelHsu/Cleric-RAG-Agent/blob/main/app/config.py#L7)).
 In anticipating challenge where the call logs might be extensive, therefore affecting the agent's accuracy and increase computational demands.
