@@ -6,6 +6,9 @@ The Agent uses _FewShotPromptTemplate_ to create a list of facts extracted from 
 LLamaIndex plays the role to store data chunks, and stores them to a _VectorStore_ for the Agent to query.
 You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui).
 
+- [Application URL](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui)
+- [API Endpoint](https://cleric-agent-api-untxx3isja-uc.a.run.app)
+
 
 ## Implemented Architecture
 
