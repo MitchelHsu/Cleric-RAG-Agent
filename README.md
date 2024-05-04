@@ -6,8 +6,8 @@ The application uses _FewShotPromptTemplate_ and _PromptTemplate_ to prompt LLM 
 LLamaIndex plays the role to store data chunks to a _VectorStore_ for the Agent to retrieve relevant information according to the question.
 You can test it [here](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui).
 
-- [Application URL](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui)
-- [API Endpoint](https://cleric-agent-api-untxx3isja-uc.a.run.app)
+- [Application URL](https://huggingface.co/spaces/MitchelHsu/cleric-agent-ui) [closed]
+- [API Endpoint](https://cleric-agent-api-untxx3isja-uc.a.run.app) [closed]
     - `/submit_question_and_documents`
     - `/get_question_and_facts`
 
